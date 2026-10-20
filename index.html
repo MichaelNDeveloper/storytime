@@ -6,35 +6,128 @@
     <title>Storytime Player</title>
     <style>
         body { font-family: Georgia, serif; text-align: center; background: #fdf6e2; color: #333; padding: 40px; }
-        .player-container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        button { background: #8b5a2b; color: white; border: none; padding: 10px 20px; margin: 10px; border-radius: 20px; cursor: pointer; font-size: 16px; }
+        .player-container { max-width: 450px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        button { background: #8b5a2b; color: white; border: none; padding: 10px 20px; margin: 8px; border-radius: 20px; cursor: pointer; font-size: 16px; }
         button:hover { background: #a06d3b; }
-        h2 { color: #5c3a21; }
+        .btn-back { background: #555; }
+        .btn-back:hover { background: #777; }
+        h1 { color: #5c3a21; margin-bottom: 5px; }
+        h2 { color: #5c3a21; margin-top: 0; }
+        .subtitle { color: #8b5a2b; font-style: italic; margin-bottom: 30px; }
+        .grid { display: flex; flex-direction: column; gap: 10px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
     <h1>Storytime Corner</h1>
+    <p class="subtitle">Escape into a world of audio adventures</p>
 
     <div class="player-container">
-        <h2 id="story-title">Select a Chapter</h2>
-        <!-- The invisible native audio player controlled by the buttons -->
-         <audio id="audio-player" controls style="width: 100%; margin-top: 10px;"></audio>
+        <!-- 1. MAIN MENU (STORY SELECTION VIEW) -->
+        <div id="story-menu-view">
+            <h2>Select a Story</h2>
+            <div id="story-list-container" class="grid">
+                <!-- Dynamically populated by JS -->
+            </div>
+        </div>
 
-         <div style="margin-top: 20px;">
-            <!-- Buttons pass the audio filepath and the chapter title to the javascript function -->
-             <button onclick="playChapter('audio/a_lost_pigeon_in_nyc/chapter1.mp3', 'Chapter 1: Begins')">Chapter 1</button>
-         </div>
+        <!-- 2. CHAPTER PLAYER VIEW (HIDDEN BY DEFAULT) -->
+        <div id="chapter-player-view" class="hidden">
+            <button class="btn-back" onclick="showMainMenu()">← Main Menu</button>
+            <h2 id="current-story-title" style="margin-top: 15px;">Story Title</h2>
+            <h3 id="current-chapter-title" style="font-weight: normal; color: #666;">Select a Chapter</h3>
+            
+            <audio id="audio-player" controls style="width: 100%; margin: 15px 0;"></audio>
+
+            <div id="chapter-list-container" style="margin-top: 20px;">
+                <!-- Dynamically populated by JS -->
+            </div>
+        </div>
     </div>
 
     <script>
-        function playChapter(audiosrc, title) {
-            const player = document.getElementById('audio-player');
-            const titleElement = document.getElementById('story-title');
+        // Data structure containing all offered stories and their respective chapters
+        const catalog = [
+            {
+                id: "lost-pigeon",
+                title: "A Lost Pigeon in NYC",
+                chapters: [
+                    { title: "Chapter 1: The Takeoff", src: "audio/a_lost_pigeon_in_nyc/chapter1.mp3" },
+                    { title: "Chapter 2: Central Park", src: "audio/a_lost_pigeon_in_nyc/chapter2.mp3" },
+                    { title: "Chapter 3: Safe at Last", src: "audio/a_lost_pigeon_in_nyc/chapter3.mp3" }
+                ]
+            },
+            {
+                id: "deep-sea",
+                title: "The Deep Sea Submarine",
+                chapters: [
+                    { title: "Chapter 1: Into the Blue", src: "audio/deep_sea/chapter1.mp3" },
+                    { title: "Chapter 2: The Trench", src: "audio/deep_sea/chapter2.mp3" }
+                ]
+            }
+        ];
 
-            titleElement.innerText = title;
-            player.src = audiosrc;
-            player.play();
+        // Global DOM Elements
+        const storyMenuView = document.getElementById('story-menu-view');
+        const chapterPlayerView = document.getElementById('chapter-player-view');
+        const storyListContainer = document.getElementById('story-list-container');
+        const chapterListContainer = document.getElementById('chapter-list-container');
+        const audioPlayer = document.getElementById('audio-player');
+        const currentStoryTitle = document.getElementById('current-story-title');
+        const currentChapterTitle = document.getElementById('current-chapter-title');
+
+        // Initialize the app by building the main menu
+        function initApp() {
+            storyListContainer.innerHTML = '';
+            catalog.forEach(story => {
+                const btn = document.createElement('button');
+                btn.innerText = story.title;
+                btn.onclick = () => loadStory(story.id);
+                storyListContainer.appendChild(btn);
+            });
         }
+
+        // Switch view to show a specific story's chapter list
+        function loadStory(storyId) {
+            const story = catalog.find(s => s.id === storyId);
+            if (!story) return;
+
+            // Setup current view text
+            currentStoryTitle.innerText = story.title;
+            currentChapterTitle.innerText = "Select a Chapter";
+            
+            // Clear existing chapter buttons
+            chapterListContainer.innerHTML = '';
+
+            // Generate buttons for each chapter
+            story.chapters.forEach(chapter => {
+                const btn = document.createElement('button');
+                btn.innerText = chapter.title.split(':')[0]; // Just shows "Chapter X" on button
+                btn.onclick = () => playChapter(chapter.src, chapter.title);
+                chapterListContainer.appendChild(btn);
+            });
+
+            // Toggle view visibility
+            storyMenuView.classList.add('hidden');
+            chapterPlayerView.classList.remove('hidden');
+        }
+
+        // Play the audio track and update headers
+        function playChapter(audiosrc, fullTitle) {
+            currentChapterTitle.innerText = fullTitle;
+            audioPlayer.src = audiosrc;
+            audioPlayer.play();
+        }
+
+        // Return to the main menu view and stop playing audio
+        function showMainMenu() {
+            audioPlayer.pause(); // Optional: stops playback when leaving the screen
+            chapterPlayerView.classList.add('hidden');
+            storyMenuView.classList.remove('hidden');
+        }
+
+        // Run setup on load
+        initApp();
     </script>
 </body>
 </html>
