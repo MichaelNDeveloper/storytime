@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storytime Player</title>
     <style>
+        /* Audio player control panel */
         body { font-family: Georgia, serif; text-align: center; background: #fdf6e2; color: #333; padding: 40px; }
         .player-container { max-width: 450px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         button { background: #8b5a2b; color: white; border: none; padding: 10px 20px; margin: 8px; border-radius: 20px; cursor: pointer; font-size: 16px; }
@@ -16,6 +17,13 @@
         .subtitle { color: #8b5a2b; font-style: italic; margin-bottom: 30px; }
         .grid { display: flex; flex-direction: column; gap: 10px; }
         .hidden { display: none; }
+        
+        /* Ambience control panel */
+        .ambiance-panel { margin-top: 25px; padding-top: 15px; border-top: 1px dashed #ccc; }
+        .ambiance-title { font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .btn-ambient { background: #4a6b5d; font-size: 14px; padding: 8px 15px; }
+        .btn-ambient:hover { background: #5c8574; }
+        .btn-ambient.active { background: #c2593f; } /* Highlighting the active ambiance */
     </style>
 </head>
 <body>
@@ -43,10 +51,20 @@
                 <!-- Dynamically populated by JS -->
             </div>
         </div>
+
+        <!-- 3. BACKGROUND AMBIANCE PANEL (PERMANENTLY VISIBLE AT THE BOTTOM) -->
+        <div class="ambiance-panel">
+            <div class="ambiance-title">Background Sounds</div>
+            <!-- Invisible background audio tag with "loop" enabled -->
+            <audio id="ambient-player" loop></audio>
+            
+            <button class="btn-ambient" id="btn-pink" onclick="toggleAmbiance('audio/ambience/pink_noise.mp3', 'btn-pink')">Pink Noise</button>
+            <button class="btn-ambient" id="btn-waves" onclick="toggleAmbiance('audio/ambience/waves.mp3', 'btn-waves')">Waves</button>
+            <button class="btn-ambient" id="btn-forest" onclick="toggleAmbiance('audio/ambience/forest.mp3', 'btn-forest')">Forest</button>
+        </div>
     </div>
 
     <script>
-        // Data structure containing all offered stories and their respective chapters
         const catalog = [
             {
                 id: "lost-pigeon",
@@ -73,10 +91,13 @@
         const storyListContainer = document.getElementById('story-list-container');
         const chapterListContainer = document.getElementById('chapter-list-container');
         const audioPlayer = document.getElementById('audio-player');
+        const ambientPlayer = document.getElementById('ambient-player');
         const currentStoryTitle = document.getElementById('current-story-title');
         const currentChapterTitle = document.getElementById('current-chapter-title');
 
-        // Initialize the app by building the main menu
+        // Set ambient volume slightly lower so it doesn't drown out the story voiceover
+        ambientPlayer.volume = 0.3; 
+
         function initApp() {
             storyListContainer.innerHTML = '';
             catalog.forEach(story => {
@@ -87,46 +108,56 @@
             });
         }
 
-        // Switch view to show a specific story's chapter list
         function loadStory(storyId) {
             const story = catalog.find(s => s.id === storyId);
             if (!story) return;
 
-            // Setup current view text
             currentStoryTitle.innerText = story.title;
             currentChapterTitle.innerText = "Select a Chapter";
-            
-            // Clear existing chapter buttons
             chapterListContainer.innerHTML = '';
 
-            // Generate buttons for each chapter
             story.chapters.forEach(chapter => {
                 const btn = document.createElement('button');
-                btn.innerText = chapter.title.split(':')[0]; // Just shows "Chapter X" on button
+                btn.innerText = chapter.title.split(':')[0]; 
                 btn.onclick = () => playChapter(chapter.src, chapter.title);
                 chapterListContainer.appendChild(btn);
             });
 
-            // Toggle view visibility
             storyMenuView.classList.add('hidden');
             chapterPlayerView.classList.remove('hidden');
         }
 
-        // Play the audio track and update headers
         function playChapter(audiosrc, fullTitle) {
             currentChapterTitle.innerText = fullTitle;
             audioPlayer.src = audiosrc;
             audioPlayer.play();
         }
 
-        // Return to the main menu view and stop playing audio
         function showMainMenu() {
-            audioPlayer.pause(); // Optional: stops playback when leaving the screen
+            audioPlayer.pause(); 
             chapterPlayerView.classList.add('hidden');
             storyMenuView.classList.remove('hidden');
         }
 
-        // Run setup on load
+        // NEW: Handles playing, changing, or stopping background audio tracks
+        function toggleAmbiance(src, buttonId) {
+            const clickedButton = document.getElementById(buttonId);
+            const isCurrentTrack = ambientPlayer.src.includes(src);
+
+            // Clear active styling from all ambient buttons
+            document.querySelectorAll('.btn-ambient').forEach(btn => btn.classList.remove('active'));
+
+            if (!ambientPlayer.paused && isCurrentTrack) {
+                // Scenario A: User clicked the active sound button -> Turn it off
+                ambientPlayer.pause();
+            } else {
+                // Scenario B: User clicked a brand new track or turned it back on
+                ambientPlayer.src = src;
+                ambientPlayer.play();
+                clickedButton.classList.add('active'); // Turn button red to indicate it is on
+            }
+        }
+
         initApp();
     </script>
 </body>
