@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storytime Player</title>
+    <style>
+        body { font-family: Georgia, serif; text-align: center; background: #fdf6e2; color: #333; padding: 40px; }
+        .player-container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        button { background: #8b5a2b; color: white; border: none; padding: 10px 20px; margin: 10px; border-radius: 20px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #a06d3b; }
+        h2 { color: #5c3a21; }
+    </style>
+</head>
+<body>
+    <h1>Storytime Corner</h1>
+
+    <div class="player-container">
+        <h2 id="story-title">Select a Chapter</h2>
+        <!-- The invisible native audio player controlled by the buttons -->
+         <audio id="audio-player" controls style="width: 100%; margin-top: 10px;"></audio>
+
+         <div style="margin-top: 20px;">
+            <!-- Buttons pass the audio filepath and the chapter title to the javascript function -->
+             <button onclick="playChapter('audio/a_lost_pigeon_in_nyc/chapter1.mp3', 'Chapter 1: Begins')">Chapter 1</button>
+         </div>
+    </div>
+
+    <script>
+        function playChapter(audiosrc, title) {
+            const player = document.getElementById('audio-player');
+            const titleElement = document.getElementById('story-title');
+
+            titleElement.innerText = title;
+            player.src = audiosrc;
+            player.play();
+        }
+    </script>
+</body>
+</html>
