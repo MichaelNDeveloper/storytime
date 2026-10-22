@@ -27,8 +27,8 @@
     </style>
 </head>
 <body>
-    <h1>Storytime Corner</h1>
-    <p class="subtitle">Escape into a world of audio adventures</p>
+    <h1>Em's Storytime Corner</h1>
+    <p class="subtitle">Enjoy your sleepy time, my dove~</p>
 
     <div class="player-container">
         <!-- 1. MAIN MENU (STORY SELECTION VIEW) -->
@@ -60,6 +60,7 @@
             
             <button class="btn-ambient" id="btn-pink" onclick="toggleAmbiance('audio/ambience/pink_noise.mp3', 'btn-pink')">Pink Noise</button>
             <button class="btn-ambient" id="btn-waves" onclick="toggleAmbiance('audio/ambience/waves.mp3', 'btn-waves')">Waves</button>
+            <button class="btn-ambient" id="btn-rain" onclick="toggleAmbiance('audio/ambience/rain.mp3', 'btn-rain')">Rain</button>
             <button class="btn-ambient" id="btn-forest" onclick="toggleAmbiance('audio/ambience/forest.mp3', 'btn-forest')">Forest</button>
         </div>
     </div>
@@ -70,19 +71,60 @@
                 id: "lost-pigeon",
                 title: "A Lost Pigeon in NYC",
                 chapters: [
-                    { title: "Chapter 1: The Takeoff", src: "audio/a_lost_pigeon_in_nyc/chapter1.mp3" },
-                    { title: "Chapter 2: Central Park", src: "audio/a_lost_pigeon_in_nyc/chapter2.mp3" },
-                    { title: "Chapter 3: Safe at Last", src: "audio/a_lost_pigeon_in_nyc/chapter3.mp3" }
+                    { title: "Chapter 1: A Lost Pigeon Named Lew", src: "audio/a_lost_pigeon_in_nyc/chapter1.mp3" },
+                    { title: "Chapter 2: A Pigeon's First Day in NYC", src: "audio/a_lost_pigeon_in_nyc/chapter2.mp3" },
+                    { title: "Chapter 3: A Pigeon Takes a Taxi in NYC", src: "audio/a_lost_pigeon_in_nyc/chapter3.mp3" },
+                    { title: "Chapter 4: Pigeon Greed", src: "audio/a_lost_pigeon_in_nyc/chapter4.mp3" },
+                    { title: "Chapter 5: Lew the Pigeon Makes a Friend", src: "audio/a_lost_pigeon_in_nyc/chapter5.mp3" },
+                    { title: "Chapter 6: How Birds Party", src: "audio/a_lost_pigeon_in_nyc/chapter6.mp3" },
+                    { title: "Chapter 7: Lew Learns About Life in NYC", src: "audio/a_lost_pigeon_in_nyc/chapter7.mp3" },
+                    { title: "Chapter 8: The Perfect Pigeon Heist", src: "audio/a_lost_pigeon_in_nyc/chapter8.mp3" },
+                    { title: "Chapter 9: How to be a New Yorker (as a Pigeon)", src: "audio/a_lost_pigeon_in_nyc/chapter9.mp3" },
+                    { title: "Chapter 10: Lew Explores the City that Never Sleeps", src: "audio/a_lost_pigeon_in_nyc/chapter10.mp3" },
+                    /*{ title: "Chapter 11: Lew Visits Central Park", src: "audio/a_lost_pigeon_in_nyc/chapter11.mp3" },
+                    { title: "Chapter 12: A Big Chase in Central Park", src: "audio/a_lost_pigeon_in_nyc/chapter12.mp3" },
+                    { title: "Chapter 13: Old Friends in NYC", src: "audio/a_lost_pigeon_in_nyc/chapter13.mp3" },
+                    { title: "Chapter 14: Pigeons with Plans", src: "audio/a_lost_pigeon_in_nyc/chapter14.mp3" },
+                    { title: "Chapter 15: Joan's Story", src: "audio/a_lost_pigeon_in_nyc/chapter15.mp3" },
+                    { title: "Chapter 16: Blue Bird's Day at the Billboard Club", src: "audio/a_lost_pigeon_in_nyc/chapter16.mp3" },
+                    { title: "Chapter 17: Pigeons Picking Sides", src: "audio/a_lost_pigeon_in_nyc/chapter17.mp3" },
+                    { title: "Chapter 18: Lew's Missing Home", src: "audio/a_lost_pigeon_in_nyc/chapter18.mp3" },
+                    { title: "Chapter 19: The Big Day", src: "audio/a_lost_pigeon_in_nyc/chapter19.mp3" },
+                    { title: "Chapter 20: A Pigeon's Rescue Mission", src: "audio/a_lost_pigeon_in_nyc/chapter20.mp3" },
+                    { title: "Chapter 21: Pigeon Panic Returns", src: "audio/a_lost_pigeon_in_nyc/chapter21.mp3" },
+                    { title: "Chapter 22: S.O.S.", src: "audio/a_lost_pigeon_in_nyc/chapter22.mp3" },
+                    { title: "Chapter 23: A New Plan", src: "audio/a_lost_pigeon_in_nyc/chapter23.mp3" },
+                    { title: "Chapter 24: Into Hiding", src: "audio/a_lost_pigeon_in_nyc/chapter24.mp3" },
+                    { title: "Chapter 25: A New Day", src: "audio/a_lost_pigeon_in_nyc/chapter25.mp3" },
+                    { title: "Chapter 26: Lost Little Lew", src: "audio/a_lost_pigeon_in_nyc/chapter26.mp3" },
+                    { title: "Chapter 27: Take Two", src: "audio/a_lost_pigeon_in_nyc/chapter27.mp3" },
+                    { title: "Chapter 28: The Vents", src: "audio/a_lost_pigeon_in_nyc/chapter28.mp3" },
+                    { title: "Chapter 29: Lew Goes Shopping", src: "audio/a_lost_pigeon_in_nyc/chapter29.mp3" },
+                    { title: "Chapter 30: Getting Inside", src: "audio/a_lost_pigeon_in_nyc/chapter30.mp3" },
+                    { title: "Chapter 31: Birds in Human Spaces", src: "audio/a_lost_pigeon_in_nyc/chapter31.mp3" },
+                    { title: "Chapter 32: Legs Lke Thunderbolts", src: "audio/a_lost_pigeon_in_nyc/chapter32.mp3" },
+                    { title: "Chapter 33: Keeping Your Feathers", src: "audio/a_lost_pigeon_in_nyc/chapter33.mp3" },
+                    { title: "Chapter 34: Flying for the Exit", src: "audio/a_lost_pigeon_in_nyc/chapter34.mp3" },
+                    { title: "Chapter 35: The Spinning Doors", src: "audio/a_lost_pigeon_in_nyc/chapter35.mp3" },
+                    { title: "Chapter 36: Finding Francois", src: "audio/a_lost_pigeon_in_nyc/chapter36.mp3" },
+                    { title: "Chapter 37: Chase", src: "audio/a_lost_pigeon_in_nyc/chapter37.mp3" },
+                    { title: "Chapter 38: Alley Escape", src: "audio/a_lost_pigeon_in_nyc/chapter38.mp3" },
+                    { title: "Chapter 39: Going Underground", src: "audio/a_lost_pigeon_in_nyc/chapter39.mp3" },
+                    { title: "Chapter 40: When Pigeons Takes the Subway", src: "audio/a_lost_pigeon_in_nyc/chapter40.mp3" },
+                    { title: "Chapter 41: Sharing is Caring", src: "audio/a_lost_pigeon_in_nyc/chapter41.mp3" },
+                    { title: "Chapter 42: Using Pigeon Greed", src: "audio/a_lost_pigeon_in_nyc/chapter42.mp3" },
+                    { title: "Chapter 43: Mac's on a Mission", src: "audio/a_lost_pigeon_in_nyc/chapter43.mp3" },
+                    { title: "Chapter 44: The Penultimate Mission", src: "audio/a_lost_pigeon_in_nyc/chapter44.mp3" },
+                    { title: "Chapter 45: The Final Chapter", src: "audio/a_lost_pigeon_in_nyc/chapter45.mp3" }*/
                 ]
             },
-            {
-                id: "deep-sea",
-                title: "The Deep Sea Submarine",
+            /*{
+                id: "new-entry",
+                title: "New Entry",
                 chapters: [
-                    { title: "Chapter 1: Into the Blue", src: "audio/deep_sea/chapter1.mp3" },
-                    { title: "Chapter 2: The Trench", src: "audio/deep_sea/chapter2.mp3" }
+                    { title: "Chapter 1: New Entry", src: "audio/new_entry/chapter1.mp3" },
                 ]
-            }
+            }*/
         ];
 
         // Global DOM Elements
@@ -96,7 +138,35 @@
         const currentChapterTitle = document.getElementById('current-chapter-title');
 
         // Set ambient volume slightly lower so it doesn't drown out the story voiceover
-        ambientPlayer.volume = 0.3; 
+        ambientPlayer.volume = 0.4; 
+
+        // Attempt to continue playback as the phone OS is off
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: currentChapterTitle.innerText,
+                artist: 'Michael Nieto',
+                album: currentStoryTitle.innerText,
+                //artwork: [{src: 'cover.png', sizes: '512x512', type: 'image/png'}]
+            });
+
+            // You must also define action handlers (even if empty) to tell the OS it can control playback
+            navigator.mediaSession.setActionHandler('play', () => { audioPlayer.play(); });
+            navigator.mediaSession.setActionHandler('play', () => { ambientPlayer.play(); });
+
+            navigator.mediaSession.setActionHandler('pause', () => { audioPlayer.pause(); });
+            navigator.mediaSession.setActionHandler('pause', () => { ambientPlayer.pause(); });
+        }
+
+        // Automatically shuts off the ambience player when the main story is done
+        audioPlayer.addEventListener('ended', (event) => {
+            if (!ambientPlayer.paused) {
+                ambientPlayer.pause()
+            }
+
+            document.querySelectorAll('.btn-ambient').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        });
 
         function initApp() {
             storyListContainer.innerHTML = '';
@@ -118,7 +188,7 @@
 
             story.chapters.forEach(chapter => {
                 const btn = document.createElement('button');
-                btn.innerText = chapter.title.split(':')[0]; 
+                btn.innerText = chapter.title.split(':')[1]; 
                 btn.onclick = () => playChapter(chapter.src, chapter.title);
                 chapterListContainer.appendChild(btn);
             });
